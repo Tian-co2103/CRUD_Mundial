@@ -1,0 +1,80 @@
+[{
+  "_id": {
+    "$oid": "6741458780ae326fc9965670"
+  },
+  "nombre": "Brasil",
+  "estadio": "Maracanã",
+  "ciudad_origen": "Río de Janeiro",
+  "entrenador": "Tite",
+  "jugadores_disponibles": 23
+},
+{
+  "_id": {
+    "$oid": "6741459080ae326fc9965672"
+  },
+  "nombre": "Argentina",
+  "estadio": "La Bombonera",
+  "ciudad_origen": "Buenos Aires",
+  "entrenador": "Lionel Scaloni",
+  "jugadores_disponibles": 23
+},
+{
+  "_id": {
+    "$oid": "6741459980ae326fc9965674"
+  },
+  "nombre": "Francia",
+  "estadio": "Parque de los Príncipes",
+  "ciudad_origen": "París",
+  "entrenador": "Didier Deschamps",
+  "jugadores_disponibles": 23
+},
+{
+  "_id": {
+    "$oid": "674145a280ae326fc9965676"
+  },
+  "nombre": "Alemania",
+  "estadio": "Allianz Arena",
+  "ciudad_origen": "Múnich",
+  "entrenador": "Hansi Flick",
+  "jugadores_disponibles": 23
+},
+{
+  "_id": {
+    "$oid": "674145ab80ae326fc9965678"
+  },
+  "nombre": "España",
+  "estadio": "Santiago Bernabéu",
+  "ciudad_origen": "Madrid",
+  "entrenador": "Luis de la Fuente",
+  "jugadores_disponibles": 23
+},
+{
+  "_id": {
+    "$oid": "674145b780ae326fc996567a"
+  },
+  "nombre": "Italia",
+  "estadio": "San Siro",
+  "ciudad_origen": "Milán",
+  "entrenador": "Roberto Mancini",
+  "jugadores_disponibles": 23
+},
+{
+  "_id": {
+    "$oid": "674145c080ae326fc996567c"
+  },
+  "nombre": "Inglaterra",
+  "estadio": "Wembley",
+  "ciudad_origen": "Londres",
+  "entrenador": "Gareth Southgate",
+  "jugadores_disponibles": 23
+},
+{
+  "_id": {
+    "$oid": "674145cb80ae326fc996567e"
+  },
+  "nombre": "Países Bajos",
+  "estadio": "Johan Cruyff Arena",
+  "ciudad_origen": "Ámsterdam",
+  "entrenador": "Ronald Koeman",
+  "jugadores_disponibles": 23
+}]

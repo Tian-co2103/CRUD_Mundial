@@ -1,0 +1,50 @@
+--
+# Se ejecutan servicios para cada nodo, determinando la ubicación del nodo principal y los nodos secundarios, especificando el puerto de conexión.
+
+mongod --replSet RS --dbpath="C:\data\db" --port 27017
+
+mongod --replSet RS --dbpath="C:\data\db\nodo2" --port 27018
+
+mongod --replSet RS --dbpath="C:\data\db\nodo3" --port 27019
+
+--
+# Se abre consola Mongo Shell direccionando directamente al nodo principal.
+
+mongosh --host localhost --port 27017
+
+# Se ejecuta para iniciar Replicación y fijar el nodo primario.
+
+rs.initiate();
+
+# Se ejecuta para agregar y determinar el nodo secundario.
+
+rs.add("localhost:27018");
+
+# Se ejecuta para agregar y determinar un segundo nodo como secundario.
+
+rs.add("localhost:27019");
+
+# Ejecuta para saber el estado actual de los nodos y replicaciones realizadas, para confirmar jerarquía.
+
+rs.status()
+
+--
+# Código para agregar un nuevo arbitro en la base de datos.
+
+        {
+            "nombre": "Michael Oliver",
+            "nacionalidad": "Inglaterra",
+            "edad": 39
+        }
+
+--
+# Código para agregar un nuevo equipo en la base de datos.
+
+        {
+            "nombre": "Colombia",
+            "estadio": "Estadio Metropolitano Roberto Meléndez",
+            "ciudad_origen": "Barranquilla",
+            "entrenador": "Néstor Lorenzo",
+            "jugadores_disponibles": 23
+        }
+

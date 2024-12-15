@@ -1,0 +1,152 @@
+MongoClient
+
+mongod
+--
+Creación directorios
+
+md c:\shard_data\shard1\data1
+md c:\shard_data\shard1\data2
+md c:\shard_data\shard1\data3
+
+md c:\shard_data\shard2\data1
+md c:\shard_data\shard2\data2
+md c:\shard_data\shard2\data3
+
+md c:\shard_data\shard3\data1
+md c:\shard_data\shard3\data2
+md c:\shard_data\shard3\data3
+
+--
+Iniciar fragmentos
+
+start mongod.exe --shardsvr --port 26017 --dbpath "c:\shard_data\shard1\data1" --replSet shard1_replset
+start mongod.exe --shardsvr --port 26117 --dbpath "c:\shard_data\shard1\data2" --replSet shard1_replset
+start mongod.exe --shardsvr --port 26217 --dbpath "c:\shard_data\shard1\data3" --replSet shard1_replset
+
+start mongod.exe --shardsvr --port 28017 --dbpath="C:\shard_data\shard2\data1" --replSet shard2_replset
+start mongod.exe --shardsvr --port 28117 --dbpath="C:\shard_data\shard2\data2" --replSet shard2_replset
+start mongod.exe --shardsvr --port 28217 --dbpath="C:\shard_data\shard2\data3" --replSet shard2_replset
+
+start mongod.exe --shardsvr --port 29017 --dbpath="C:\shard_data\shard3\data1" --replSet shard3_replset
+start mongod.exe --shardsvr --port 29117 --dbpath="C:\shard_data\shard3\data2" --replSet shard3_replset
+start mongod.exe --shardsvr --port 29217 --dbpath="C:\shard_data\shard3\data3" --replSet shard3_replset
+
+--
+Conectar servidor para iniciar replicas
+
+mongosh --host localhost --port 26017
+
+rs.initiate(
+{
+_id: "shard1_replset",
+members: [
+{ _id : 0, host:"localhost:26017" },
+{ _id : 1, host:"localhost:26117" },
+{ _id : 2, host:"localhost:26217" }
+]
+}
+)
+
+mongosh --host localhost --port 28017
+
+rs.initiate(
+{
+_id: "shard2_replset",
+members: [
+{ _id : 0, host:"localhost:28017" },
+{ _id : 1, host:"localhost:28117" },
+{ _id : 2, host:"localhost:28217" }
+]
+}
+)
+
+mongosh --host localhost --port 29017
+
+rs.initiate(
+{
+_id: "shard3_replset",
+members: [
+{ _id : 0, host:"localhost:29017" },
+{ _id : 1, host:"localhost:29117" },
+{ _id : 2, host:"localhost:29217" }
+]
+}
+)
+
+--
+Crear directorios de configuración
+
+md c:\shard_data\config_server1\data1
+md c:\shard_data\config_server1\data2
+md c:\shard_data\config_server1\data3
+
+--
+Iniciar sv de config
+
+start mongod.exe --configsvr --port 47017 --dbpath="C:\shard_data\config_server1\data1" --replSet configserver1_replset
+start mongod.exe --configsvr --port 47117 --dbpath="C:\shard_data\config_server1\data2" --replSet configserver1_replset
+start mongod.exe --configsvr --port 47217 --dbpath="C:\shard_data\config_server1\data3" --replSet configserver1_replset
+
+--
+Conectar sv de config para replicar
+
+mongosh --host localhost --port 47017
+
+rs.initiate(
+{
+_id: "configserver1_replset",
+configsvr: true,
+members: [
+{ _id : 0, host : "localhost:47017" },
+{ _id : 1, host : "localhost:47117" },
+{ _id : 2, host : "localhost:47217" }
+]
+}
+)
+
+--
+Iniciar servidor
+
+start mongos.exe --configdb configserver1_replset/localhost:47017,localhost:47117,localhost:47217 --port 1000
+
+--
+Fragmentación
+
+mongosh --host localhost --port 1000
+
+sh.addShard("shard1_replset/localhost:26017,localhost:26117,localhost:26217")
+sh.addShard("shard2_replset/localhost:28017,localhost:28117,localhost:28217")
+sh.addShard("shard3_replset/localhost:29017,localhost:29117,localhost:29217")
+
+sh.status()
+--
+Habilitar fragmentación y colección
+
+sh.enableSharding("demos")
+
+sh.shardCollection("demos.users",{"id":1}
+
+--
+Crear colección
+
+use demos;
+for(var i=0;i<10000;i++){db.users.insert({id:
+Math.random(),
+count:i, date: new Date()})}
+
+db.users.count()10000
+
+--
+Fragmentar colección hash
+
+sh.enableSharding("sample")
+
+sh.shardCollection("sample.users",{"id":"hashed"})
+
+--
+
+
+
+
+
+
